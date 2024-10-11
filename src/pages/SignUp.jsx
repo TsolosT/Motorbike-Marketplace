@@ -6,7 +6,7 @@ import { setDoc, doc, serverTimestamp } from "firebase/firestore";
 import {db} from '../firebase.config';
 import {ReactComponent as ArrowRightIcon} from '../assets/svg/keyboardArrowRightIcon.svg';
 import visibilityIcon from '../assets/svg/visibilityIcon.svg'
-
+import OAuth from "../components/OAuth";
 
 function SignUp() {
     const [showPassword, setShowPassword] = useState(false);
@@ -74,7 +74,7 @@ function SignUp() {
                             </button>
                         </div>
                     </form>
-                    {/* Google 0Auth component */}
+                    <OAuth />
                     
                     <Link to="/sign-in" className="registerLink"><p style={{ color:'#3f3f3f' }}>Already have account?</p>Sign In Instead</Link>
                 </main>

@@ -9,15 +9,19 @@ html::-webkit-scrollbar {
 
 body {
   font-family: 'Montserrat', sans-serif;
-  background-color: #f2f4f8;
+  background: linear-gradient(135deg, #c5d8ff98, #e6f0ff);
   margin: 0;
   box-sizing: border-box;
+  color: #2c2c2c; 
 }
 
+hr{
+  border-color:#c5d8ff5e;
+}
 a {
   text-decoration: none;
   display: block;
-  color: #000000;
+  color: #333333;
 }
 
 button {
@@ -25,21 +29,59 @@ button {
   border: none;
 }
 
+.btn-hover:hover {
+  transform: scale(1.08);
+  transition: transform 0.2s ease-in-out; 
+}
+.icon-box{
+    display: flex;
+    align-items: flex-end;
+}
 .input,
 .passwordInput,
 .emailInput,
 .nameInput,
 .textarea {
-  box-shadow: rgba(0, 0, 0, 0.11);
-  border: none;
-  background: #ffffff;
-  border-radius: 3rem;
+  border: 1px solid #ddd;
+  background: #f9fafb;
+  border-radius: 1.5rem;
+  padding: 0.75rem 2rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  transition: border-color 0.3s ease;
   height: 3rem;
   width: 100%;
   outline: none;
   font-family: 'Montserrat', sans-serif;
-  padding: 0 3rem;
   font-size: 1rem;
+}
+
+.input:focus, .passwordInput:focus, .emailInput:focus, .nameInput:focus, .textarea:focus {
+  border-color: #fb3c04;
+  outline: none;
+  box-shadow: 0 0 5px rgba(251, 60, 4, 0.4);
+}
+.contact-link {
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.contact-text {
+  display: flex;
+  align-items: flex-start;
+  color: inherit;
+}
+
+.arrow-contact-icon {
+  margin-left: 8px; 
+  width: 16px;      
+  height: 16px;
+  color: inherit;    
+}
+
+.contact-link:hover .contact-text, .contact-link:hover .arrow-contact-icon  {
+  color: #fb3c04; 
 }
 @media (min-width: 1100px) {
   .input,
@@ -59,17 +101,22 @@ button {
 
 .primaryButton {
   cursor: pointer;
-  background: #fb3c04;
-  border-radius: 1rem;
-  padding: 0.85rem 2rem;
+  background: linear-gradient(45deg, #fb3c04, #ff652f);
+  border-radius: 1.5rem;
+  padding: 0.85rem 2.5rem;
   color: #ffffff;
-  font-weight: 600;
+  font-weight: 700;
   font-size: 1.25rem;
   width: 80%;
-  margin: 0 auto;
+  margin: 1rem auto;
   display: flex;
   align-items: center;
   justify-content: center;
+  box-shadow: 0 4px 12px rgba(251, 60, 4, 0.3);
+  transition: box-shadow 0.3s ease;
+}
+.primaryButton:hover {
+  box-shadow: 0 6px 18px rgba(251, 60, 4, 0.5);
 }
 
 .removeIcon {
@@ -123,10 +170,11 @@ button {
 .loadingSpinner {
   width: 64px;
   height: 64px;
-  border: 8px solid;
-  border-color: #fb3c04 transparent #fb3c04 transparent;
+  border: 8px solid transparent;
+  border-top-color: #fb3c04;
+  border-bottom-color: #fb3c04;
   border-radius: 50%;
-  animation: spin 1.2s linear infinite;
+  animation: spin 0.8s linear infinite;
 }
 @keyframes spin {
   0% {
@@ -148,7 +196,10 @@ button {
   bottom: 0;
   right: 0;
   height: 85px;
-  background-color: #ffffff;
+  background: #ffffff;
+  border-top-left-radius: 1.5rem;
+  border-top-right-radius: 1.5rem;
+  box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.1);
   z-index: 1000;
   display: flex;
   justify-content: center;
@@ -183,8 +234,8 @@ button {
   font-weight: 600;
   color: #8f8f8f;
 }
-.navbarListItemNameActive {
-  color: #2c2c2c;
+.navbarListItem:hover .navbarListItemName, .navbarListItemNameActive {
+  color: #fb3c04;
 }
 
 .nameInput {
@@ -309,6 +360,9 @@ button {
     margin-bottom: 10rem;
   }
 }
+.exploreHeading{
+  color:#fb3c04;
+}
 
 .exploreHeading,
 .exploreCategoryHeading {
@@ -331,9 +385,16 @@ button {
 .swiperSlideDiv {
   position: relative;
   width: 100%;
-  height: 100%;
+  height: 300px;
 }
 
+/* Medium and larger screens */
+@media (min-width: 768px) {
+  .swiperSlideDiv {
+      height: 524px;
+      background-size: contain!important;
+  }
+}
 .swiperSlideImg {
   width: 100%;
   object-fit: cover;
@@ -407,10 +468,18 @@ button {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
   position: relative;
+  background-color: #ffffff; 
+  padding: 1.5rem; 
+  border-radius: 1rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease, transform 0.2s ease;
 }
-
+.categoryListing:hover {
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
+}
 .categoryListingLink {
   display: contents;
 }
@@ -651,9 +720,10 @@ button {
 
 .profileCard {
   background-color: #ffffff;
-  border-radius: 1rem;
-  padding: 1rem;
-  box-shadow: rgba(0, 0, 0, 0.2);
+  border-radius: 1.5rem;
+  padding: 1.5rem;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
   max-width: 500px;
 }
 
@@ -673,6 +743,7 @@ button {
   font-weight: 600;
   width: 100%;
 }
+
 .profileNameActive {
   background-color: rgba(44, 44, 44, 0.1);
 }
@@ -703,7 +774,14 @@ button {
   justify-content: space-between;
   align-items: center;
 }
-
+.shareIconDiv:hover,
+.categories-hover:hover > img,
+.item-hover:hover,
+.createListing:hover {
+  box-shadow: 0px 4px 8px rgba(251, 60, 4, 0.3); 
+  transform: scale(1.02); 
+  cursor: pointer;
+}
 .listingText {
   margin-top: 3rem;
   font-weight: 600;
@@ -748,7 +826,9 @@ button {
 .flex {
   display: flex;
 }
-
+.formModel{
+  flex-wrap: wrap;
+}
 .formInput,
 .formInputAddress,
 .formInputName,
@@ -821,4 +901,153 @@ button {
   margin-left: 1rem;
   font-size: 0.8rem;
   opacity: 0.75;
+}
+/* @media (max-width: 768px) {
+  .input, .passwordInput, .emailInput, .nameInput, .textarea {
+    padding: 0.5rem 1.5rem;
+  }
+
+  .categoryListing {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .navbar {
+    height: 70px;
+  }
+} */
+
+.contact-link:hover, 
+.navbarListItem:hover, 
+.categoryListing:hover, 
+.primaryButton:hover, 
+.socialIconDiv:hover {
+  transform: scale(1.05);
+  transition: transform 0.2s ease, color 0.3s ease;
+}
+
+
+/* Main container */
+.listingMain {
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Listing Details */
+.listingDetails {
+  padding: 10px 0;
+}
+
+.listingName {
+  font-size: 24px;
+  font-weight: bold;
+  margin: 10px 0;
+  color: #003366;
+}
+
+.listingLocation {
+  font-size: 16px;
+  color: #666;
+}
+
+/* Type and Discount Badge */
+.listingTypeBadge {
+  display: inline-block;
+  background-color: #ff4500;
+  color: white;
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: bold;
+  margin-top: 10px;
+  margin-right: 3px;
+}
+.detailsPanel {
+  margin-top: 14px;
+}
+.discountPrice {
+  background-color: #003366;
+  color: white;
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+/* Icons and Info */
+.iconInfo {
+  display: flex;
+  gap: 12px;
+  font-size: 16px;
+  color: #333;
+  align-items: center;
+}
+
+.icon {
+  width: 22px;
+  height: 22px;
+  vertical-align: middle;
+}
+.icon-bottom {
+  vertical-align: bottom;
+}
+.icon-mr {  
+margin-right: 4px;
+}
+.separator {
+  border: none;
+  border-top: 1px solid #ddd;
+  margin: 15px 0;
+}
+
+/* Details List */
+.listingDetailsList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.listingDetailsList li {
+  margin: 8px 0;
+}
+
+.engineCapacity {
+  font-size: 16px;
+  color: #333;
+  display: flex;
+  align-items: center;
+}
+
+/* Location */
+.listingLocationTitle {
+  font-size: 18px;
+  font-weight: bold;
+  margin-top: 20px;
+}
+
+/* Share Icon */
+.shareIconDiv {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  cursor: pointer;
+}
+
+.shareIcon {
+  width: 24px;
+  height: 24px;
+}
+
+.linkCopied {
+  font-size: 14px;
+  color: #ff4500;
+  text-align: center;
+  margin-top: 8px;
 }

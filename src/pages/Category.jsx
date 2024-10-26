@@ -5,9 +5,8 @@ import { db } from "../firebase.config";
 import { toast } from "react-toastify";
 import Spinner from "../components/Spinner";
 import ListingItem from "../components/ListingItem";
-import offerIcon from '../assets/png/offer-icon.png';
 
-function Offers() {
+function Category() {
     const [listings, setListings] = useState(null);
     const [loading, setLoading] = useState(true);
 
@@ -21,7 +20,7 @@ function Offers() {
                 //Create query
                 const q = query(
                     listingsRef, 
-                    where('offer', '==', true), 
+                    where('type', '==', params.categoryName), 
                     orderBy('timestamp', 'desc'), 
                     limit(10)
                 ); 
@@ -38,21 +37,20 @@ function Offers() {
                 setListings(listings);
                 setLoading(false);
             } catch (error) {
-                toast.error('Could not fetch the offers.')
+                toast.error('Could  not fetch listings')
             }
         };
 
         fetchListings();
-    }, []);
+    }, [params.categoryName]);
 
     return ( 
         <div className="category">
             <header>
                 <p className="pageHeader">
-                    Offers {' '} <img src={offerIcon} height={48} />
+                    {params.categoryName === 'rent' ? 'Motobikes for rent' : 'Motobikes for sale'}
                 </p>
             </header>
-            {/* Todo add filter for sale or for rent only  */}
             {loading ? <Spinner/> : listings && listings.length > 0 ? (
                 <>
                     <main>
@@ -63,9 +61,9 @@ function Offers() {
                         </ul>
                     </main>
                 </>
-                ) : <p>Not any offer yet.</p>}
+                ) : <p>No listings for {params.categoryName} </p>}
         </div>
     );
 }
 
-export default Offers;
+export default Category;

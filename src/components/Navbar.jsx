@@ -1,7 +1,7 @@
 import { useNavigate, useLocation } from "react-router-dom";
-import { ReactComponent as OfferIcon } from '../assets/svg/localOfferIcon.svg'; // that
-import { ReactComponent as ExploreIcon } from '../assets/svg/exploreIcon.svg'; //fix that
-import { ReactComponent as PersonOutlineIcon } from '../assets/svg/personOutlineIcon.svg'; //that
+import { ReactComponent as OfferIcon } from '../assets/svg/localOfferIcon.svg'; 
+import { ReactComponent as ExploreIcon } from '../assets/svg/exploreIcon.svg';
+import { ReactComponent as PersonOutlineIcon } from '../assets/svg/personOutlineIcon.svg'; 
 import { useEffect, useState } from "react";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 
@@ -21,9 +21,9 @@ function Navbar() {
         const auth = getAuth();
         const unsubscribe = onAuthStateChanged(auth, (user) => {
             if (user) {
-                setLoggedIn(true); // User is logged in
+                setLoggedIn(true); 
             } else {
-                setLoggedIn(false); // User is not logged in
+                setLoggedIn(false); 
             }
         });
 
@@ -36,15 +36,15 @@ function Navbar() {
         <nav className="navbarNav">
             <ul className="navbarListItems">
                 <li className="navbarListItem" onClick={() => navigate('/')}>
-                    <ExploreIcon fill={pathMatchRoute('/') ? '#2c2c2c' : '#8f8f8f'} width='36px' height='36px' />
+                    <ExploreIcon fill={pathMatchRoute('/') ? '#fb3c04' : '#8f8f8f'} width='36px' height='36px' />
                     <p className={pathMatchRoute('/') ? 'navbarListItemNameActive' : 'navbarListItemName'}>Explore</p>
                 </li>
                 <li className="navbarListItem" onClick={() => navigate('/offers')}>
-                    <OfferIcon  fill={pathMatchRoute('/offers') ? '#2c2c2c' : '#8f8f8f'} width='36px' height='36px' />
+                    <OfferIcon  fill={pathMatchRoute('/offers') ? '#fb3c04' : '#8f8f8f'} width='36px' height='36px' />
                     <p className={pathMatchRoute('/offers') ? 'navbarListItemNameActive' : 'navbarListItemName'}>Offers</p>
                 </li>
                 <li className="navbarListItem" onClick={() => navigate('/profile')}>
-                    <PersonOutlineIcon  fill={pathMatchRoute('/profile') ? '#2c2c2c' : '#8f8f8f'} width='36px' height='36px' />
+                    <PersonOutlineIcon  fill={pathMatchRoute('/profile') ? '#fb3c04' : '#8f8f8f'} width='36px' height='36px' />
                     <p className={pathMatchRoute('/profile') ? 'navbarListItemNameActive' : 'navbarListItemName'}>{loggedIn ? 'Profile' : 'Sign In/Up'}</p>
                 </li>
             </ul>

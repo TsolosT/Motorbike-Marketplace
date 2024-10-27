@@ -9,7 +9,7 @@ A feature-rich React application that allows users to buy, sell, and rent motorb
 
 ## Live Preview
 
-Check out the live version of the app here: [Motorbike Marketplace on Vercel](https://github-finder-inky-ten.vercel.app/)
+Check out the live version of the app here: [Motorbike Marketplace on Vercel](https://motorbike-marketplace.vercel.app/)
 
 ## Table of Contents
 - [MotorBike Marketplace App 🏍️](#motorbike-marketplace-app-️)

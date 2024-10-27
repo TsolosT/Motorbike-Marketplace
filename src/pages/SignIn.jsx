@@ -33,6 +33,7 @@ function SignIn() {
             if (userCredential.user) {
                 navigate('/');
             }
+        // eslint-disable-next-line no-unused-vars
         } catch (error) {
             toast.error('Bad User Credentials.');
         }

@@ -44,6 +44,7 @@ function SignUp() {
             await setDoc(doc(db, 'users' , user.uid), formDataCopy);
 
             navigate('/');
+        // eslint-disable-next-line no-unused-vars
         } catch (error) {
             toast.error('Something went wrong with registration.');
         }

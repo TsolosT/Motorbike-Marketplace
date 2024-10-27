@@ -7,8 +7,9 @@ import {ReactComponent as PriceIcon} from '../assets/svg/priceIcon.svg';
 import {ReactComponent as LocationIcon} from '../assets/svg/locationIcon.svg';
 import {ReactComponent as DiscountOfferIcon} from '../assets/svg/discountOfferIcon.svg';
 import {ReactComponent as MotobikeIcon} from '../assets/svg/motobikeIcon.svg';
+import { ReactComponent as EditIcon } from '../assets/svg/editIcon.svg'
 
-function ListingItem({ listing, id, onDelete }) {
+function ListingItem({ listing, id, onDelete, onEdit }) {
     return ( 
         <li className="categoryListing">
             <Link to={`/category/${listing.type}/${id}`} className='categoryListingLink' >
@@ -57,6 +58,7 @@ function ListingItem({ listing, id, onDelete }) {
             {onDelete && (
                 <DeleteIcon className='removeIcon' fill='rgb(231, 76, 60)' onClick={() => onDelete(listing.id, listing.name)} />
             )}
+            {onEdit && <EditIcon className='editIcon' onClick={() => onEdit(id)} />}
         </li>
     );
 }

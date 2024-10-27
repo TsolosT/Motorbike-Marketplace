@@ -1,17 +1,19 @@
 import { useState, useEffect, useRef } from "react";
 import {getAuth, onAuthStateChanged} from 'firebase/auth';
 import {getStorage, ref, uploadBytesResumable, getDownloadURL} from 'firebase/storage';
-import {addDoc, collection, serverTimestamp} from 'firebase/firestore';
+import {doc, updateDoc, getDoc, serverTimestamp} from 'firebase/firestore';
 import { db } from "../firebase.config";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Spinner from "../components/Spinner";
 import {toast} from 'react-toastify';
 import {v4 as uuidv4} from 'uuid';
 
 const GEOCODE_API_KEY = import.meta.env.VITE_REACT_APP_GEOCODE_API_KEY;
 
-function CreateListing() {
+function EditListing() {
     const [loading, setLoading] = useState(false);
+    const [listing, setListing] = useState(null);
+    // eslint-disable-next-line
     const [geolocationEnabled, setGeolocationEnabled] = useState(true);
     const [formData, setFormData] = useState({
         type: 'rent',
@@ -36,15 +38,35 @@ function CreateListing() {
     const {type, offer, name, brand, model, condition, year, fuelType, transmission, mileage, engineCapacity, location, regularPrice, discountedPrice, images, lat, lng} = formData;
 
     const auth = getAuth();
-    if (!auth.currentUser) {
-        setLoading(false);
-        navigate('/');
-        toast.error("User is not authenticated");
-        return;
-    }
     const navigate = useNavigate();
+    const params = useParams();
     const isMounted = useRef(true);
+    //Redirect if listing is not users
+    useEffect(() => {
+            if (listing && listing.userRef !== auth.currentUser.uid) {
+            toast.error("User is not authenticated");
+            navigate('/');
+        }
+    });
+    //Fetch listing to edit form
+    useEffect(() => {
+        setLoading(true);
+        const fetchListing = async () => {
+            const docRef = doc(db, 'listings', params.listingId);
+            const docSnap = await getDoc(docRef);
 
+            if (docSnap.exists()) {
+                setListing(docSnap.data());
+                setFormData({...docSnap.data()});
+                setLoading(false);
+            } else {
+                navigate('/');
+                toast.error('Offer does not exist.');
+            }
+        }
+        fetchListing();
+    }, [params.listingId, navigate])
+    //Sets userRef to login user
     useEffect(() => {
         if (isMounted) {
             onAuthStateChanged(auth, (user) => {
@@ -61,29 +83,25 @@ function CreateListing() {
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isMounted]);
-
+    //Update the doc on submit
     const onSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
-    
         // Check if discounted price is valid
         if (discountedPrice >= regularPrice) {
             setLoading(false);
             toast.error('Discounted price must be less than the regular price.');
             return;
         }
-    
         // Check the image count
         if (images.length > 6) {
             setLoading(false);
             toast.error('Only up to 6 images can be uploaded.');
             return;
         }
-    
         // Geolocation handling
         let geolocation = {};
         let locationText;
-    
         if (geolocationEnabled) {
             try {
                 const response = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${location}&key=${GEOCODE_API_KEY}`);
@@ -97,6 +115,7 @@ function CreateListing() {
                     toast.error('Please enter a valid address.');
                     return;
                 }
+            // eslint-disable-next-line no-unused-vars
             } catch (error) {
                 setLoading(false);
                 toast.error('Failed to fetch geolocation.');
@@ -106,7 +125,6 @@ function CreateListing() {
             geolocation.lat = lat;
             geolocation.lng = lng;
         }
-    
         // Store images in Firebase Storage
         const storeImage = async (image) => {
             return new Promise((resolve, reject) => {
@@ -143,7 +161,6 @@ function CreateListing() {
                 )
             })
         }
-    
         // Upload images and handle errors
         const imgUrls = await Promise.all(
             [...images].map((image) => storeImage(image))
@@ -152,7 +169,6 @@ function CreateListing() {
             toast.error('Images not uploaded')
             return
         })
-    
         // Prepare data for Firestore submission
         const formDataCopy = {
             ...formData,
@@ -167,10 +183,14 @@ function CreateListing() {
         if (!formDataCopy.offer) delete formDataCopy.discountedPrice; // remove discount if no offer
 
         try {
-            const docRef = await addDoc(collection(db, 'listings'), formDataCopy);
+            //Update Offer
+            const docRef = doc(db, 'listings', params.listingId);
+            await updateDoc(docRef, formDataCopy);
+
             setLoading(false);
             toast.success('Listing created successfully!');
             navigate(`/category/${formDataCopy.type}/${docRef.id}`);
+            // eslint-disable-next-line no-unused-vars
         } catch (error) {
             setLoading(false);
             toast.error('Failed to create listing.');
@@ -213,7 +233,7 @@ function CreateListing() {
         <div className="profile">
             <header>
                 <p className="pageHeader">
-                    Create an Motorbike Offer
+                    Edit Motorbike Offer
                 </p>
                 <hr />
             </header>
@@ -470,7 +490,7 @@ function CreateListing() {
                     required
                 />
                 <button type='submit' className='primaryButton createListingButton'>
-                    Publish Motorbike
+                    Save Changes
                 </button>
 
             </form>
@@ -479,4 +499,4 @@ function CreateListing() {
     );
 }
 
-export default CreateListing;
+export default EditListing;

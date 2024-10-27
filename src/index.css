@@ -29,7 +29,7 @@ button {
   border: none;
 }
 
-.btn-hover:hover {
+.loadMore:hover, .editIcon:hover, .removeIcon:hover, .btn-hover:hover {
   transform: scale(1.08);
   transition: transform 0.2s ease-in-out; 
 }
@@ -118,18 +118,22 @@ button {
 .primaryButton:hover {
   box-shadow: 0 6px 18px rgba(251, 60, 4, 0.5);
 }
+.listingsList {
+  padding: 0;
+}
 
 .removeIcon {
   cursor: pointer;
   position: absolute;
-  top: -3%;
-  right: -2%;
+  top: 3%;
+  right: 3%;
 }
+
 .editIcon {
   cursor: pointer;
   position: absolute;
-  top: -3.4%;
-  right: 20px;
+  top: 2.6%;
+  right: 45px;
 }
 .pageContainer {
   padding-bottom: 100px;

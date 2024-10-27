@@ -1,9 +1,9 @@
-import {useState, useEffect} from 'react';
-import {Link, useNavigate, useParams} from 'react-router-dom';
-import {MapContainer, Marker, Popup, TileLayer} from 'react-leaflet';
+import { useState, useEffect } from 'react';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet';
 import SwiperCore from 'swiper';
 import { Navigation, Pagination, Scrollbar, A11y } from 'swiper/modules';
-import {Swiper, SwiperSlide} from 'swiper/react';
+import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper-bundle.css';
 
 import { getDoc, doc } from 'firebase/firestore';
@@ -11,8 +11,10 @@ import { getAuth } from 'firebase/auth';
 import { db } from '../firebase.config';
 import Spinner from '../components/Spinner';
 import shareIcon from '../assets/svg/shareIcon.svg';
-SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
+import ReturnBack from '../components/ReturnBack';
 
+// eslint-disable-next-line react-hooks/rules-of-hooks
+SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
 
 function Listing() {
     const [listing, setListing] = useState(null);
@@ -29,12 +31,10 @@ function Listing() {
             const docSnap = await getDoc(docRef);
             
             if (docSnap.exists()) {
-                // console.log(docSnap.data());
                 setListing(docSnap.data());
                 setLoading(false);
             }
-        }
-    
+        };
         fetchListing();
     }, [navigate, params.listingId]);
 
@@ -44,13 +44,14 @@ function Listing() {
         setTimeout(() => setShareLinkCopied(false), 2000);
     };
 
-
     if (loading) {
-        return <Spinner/>
+        return <Spinner />;
     }
 
-    return ( 
+    return (
         <main>
+            {/* Back Button */}
+            <ReturnBack/>
             {/* Slider */}
             <Swiper slidesPerView={1} pagination={{ clickable: true }}>
                 {listing.imgUrls.map((url, index) => (
@@ -59,8 +60,9 @@ function Listing() {
                             style={{
                                 background: `url(${listing.imgUrls[index]}) center no-repeat`,
                                 backgroundSize: 'cover',
+                                height: '300px', // Adjust height as needed
                             }}
-                        className='swiperSlideDiv'
+                            className="swiperSlideDiv"
                         ></div>
                     </SwiperSlide>
                 ))}
@@ -69,7 +71,7 @@ function Listing() {
             <div className="shareIconDiv" onClick={handleShare}>
                 <img src={shareIcon} alt="Share It" />
             </div>
-            {shareLinkCopied && <p className='linkCopied'>Link Copied!</p>}
+            {shareLinkCopied && <p className="linkCopied">Link Copied!</p>}
 
             <div className="listingDetails">
                 <p className="listingName">
@@ -102,12 +104,12 @@ function Listing() {
                         <li><strong>Engine Capacity:</strong> {listing.engineCapacity} cc</li>
                         <li><strong>Mileage:</strong> {listing.mileage.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')} km</li>
                         <li><strong>Fuel Type:</strong> {listing.fuelType}</li>
-                        <li><strong>Transimission:</strong> {listing.transmission}</li>
+                        <li><strong>Transmission:</strong> {listing.transmission}</li>
                     </ul>
                 </div>
 
                 <p className="listingLocationTitle">Location</p>
-                <div className='leafletContainer'>
+                <div className="leafletContainer">
                     <MapContainer
                         style={{ height: '100%', width: '100%' }}
                         center={[listing.geolocation.lat, listing.geolocation.lng]}
@@ -116,24 +118,17 @@ function Listing() {
                     >
                         <TileLayer
                             attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-                            url='https://{s}.tile.openstreetmap.de/tiles/osmde/{z}/{x}/{y}.png'
+                            url="https://{s}.tile.openstreetmap.de/tiles/osmde/{z}/{x}/{y}.png"
                         />
-
-                        <Marker
-                            position={[listing.geolocation.lat, listing.geolocation.lng]}
-                        >
+                        <Marker position={[listing.geolocation.lat, listing.geolocation.lng]}>
                             <Popup>{listing.location}</Popup>
                         </Marker>
                     </MapContainer>
                 </div>
 
-
                 {auth.currentUser?.uid !== listing.userRef && (
-                    <Link
-                        to={`/contact/${listing.userRef}?listingName=${listing.name}`}
-                        className='primaryButton'
-                    >
-                        Contact Onwer
+                    <Link to={`/contact/${listing.userRef}?listingName=${listing.name}`} className="primaryButton">
+                        Contact Owner
                     </Link>
                 )}
             </div>

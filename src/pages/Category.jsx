@@ -30,7 +30,7 @@ function Category() {
                 const listings = [];
                 //Set for pagination
                 const lastVisible = querySnap.docs[querySnap.docs.length-1];
-                setLastFetchedListing(lastVisible);
+                setLastFetchedListing(lastVisible || null);
                 
                 querySnap.forEach((doc) => {
                     return listings.push({
@@ -67,7 +67,7 @@ function Category() {
             const listings = [];
             //Set for next pagination
             const lastVisible = querySnap.docs[querySnap.docs.length-1];
-            setLastFetchedListing(lastVisible);
+            setLastFetchedListing(lastVisible || null);
             
             querySnap.forEach((doc) => {
                 return listings.push({

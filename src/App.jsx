@@ -14,6 +14,7 @@ import CreateListing from './pages/CreateListing';
 import Listing from './pages/Listing';
 import ContactOwner from './pages/ContactOwner';
 import EditListing from './pages/EditListing';
+import NotFound from './pages/NotFound';
 
 function App() {
   return (
@@ -32,10 +33,8 @@ function App() {
           <Route  path='/create-listing' element={<CreateListing/>}/>
           <Route  path='/category/:categoryName/:listingId' element={<Listing/>}/>
           <Route  path='/contact/:ownerId' element={<ContactOwner/>}/>
-          <Route  path='/edit-listing/:listingId' element={<EditListing/>}/>  
-          {/* add check not auth for edit listing */}
-          
-          {/* <Route  path='/*' element={<NotFound/>}/>  */}
+          <Route  path='/edit-listing/:listingId' element={<EditListing/>}/>            
+          <Route  path='/*' element={<NotFound/>}/> 
         </Routes>
         <Navbar/>
       </Router>

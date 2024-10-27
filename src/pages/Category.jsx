@@ -41,6 +41,7 @@ function Category() {
 
                 setListings(listings);
                 setLoading(false);
+            // eslint-disable-next-line no-unused-vars
             } catch (error) {
                 toast.error('Could  not fetch listings')
             }
@@ -78,6 +79,7 @@ function Category() {
             //Keep old and get the new snap
             setListings((prevState) => [...prevState, ...listings]);
             setLoading(false);
+        // eslint-disable-next-line no-unused-vars
         } catch (error) {
             toast.error('Could  not fetch listings')
         }

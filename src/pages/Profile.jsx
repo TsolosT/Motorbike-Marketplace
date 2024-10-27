@@ -63,6 +63,7 @@ function  Profile() {
                 });
                 toast.success('Update profile details was completed succefully');
             }
+        // eslint-disable-next-line no-unused-vars
         } catch (error) {
             toast.error('Could not update profile details');
         }

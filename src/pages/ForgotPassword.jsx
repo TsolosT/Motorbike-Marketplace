@@ -16,6 +16,7 @@ function ForgotPassword() {
             const auth = getAuth();
             await sendPasswordResetEmail(auth, email);
             toast.success('Email was send.')
+        // eslint-disable-next-line no-unused-vars
         } catch (error) {
             toast.error('Could not send reset email.')
         }

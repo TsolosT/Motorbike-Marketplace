@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
 import { collection, getDocs, query, where, orderBy, limit, startAfter } from "firebase/firestore";
 import { db } from "../firebase.config";
 import { toast } from "react-toastify";
@@ -11,8 +10,6 @@ function Offers() {
     const [listings, setListings] = useState(null);
     const [loading, setLoading] = useState(true);
     const [lastFetchedListing, setLastFetchedListing] = useState(null);
-
-    const params = useParams();
 
     useEffect(() => {
         const fetchListings = async () => {
@@ -42,6 +39,7 @@ function Offers() {
 
                 setListings(listings);
                 setLoading(false);
+            // eslint-disable-next-line no-unused-vars
             } catch (error) {
                 toast.error('Could not fetch the offers.')
             }
@@ -80,6 +78,7 @@ function Offers() {
             //Keep old and get the new snap
             setListings((prevState) => [...prevState, ...listings]);
             setLoading(false);
+        // eslint-disable-next-line no-unused-vars
         } catch (error) {
             toast.error('Could  not fetch listings')
         }

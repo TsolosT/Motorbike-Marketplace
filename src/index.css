@@ -135,6 +135,7 @@ button {
   top: 2.6%;
   right: 45px;
 }
+
 .pageContainer {
   padding-bottom: 100px;
 }
@@ -398,6 +399,10 @@ button {
       height: 524px;
       background-size: contain!important;
   }
+  .editIcon {
+    right: 85px;
+  }
+  
 }
 .swiperSlideImg {
   width: 100%;
